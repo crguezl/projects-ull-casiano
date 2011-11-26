@@ -31,21 +31,3 @@ class HTML
   end
 end
 
-if __FILE__ == $0
-  q= HTML.new {  
-    html {
-      head(:dir => "chazam", :lang => "spanish") { title "My wonderful home page" }
-      body do
-        h1 "Welcome to my home page!", :class => "chuchu", :lang => "spanish"
-        b "My hobbies:"
-        ul do
-          li "Juggling"
-          li "Knitting"
-          li { i "Sleeping" } 
-          li "Metaprogramming"
-        end #ul
-      end # body
-    }
-  }
-  puts q
-end
