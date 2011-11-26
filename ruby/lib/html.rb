@@ -15,12 +15,11 @@ class HTML
     if block_given?
       @page.push []
       yield 
-      text = @page.pop.join(' ')
-      tagattr = build_attr(args.shift) 
+      text = @page.pop.to_s
     else
       text = args.shift.to_s || "\n"
-      tagattr = build_attr(args.shift) 
     end
+    tagattr = build_attr(args.shift) 
     text = "<#{tag}#{tagattr}>\n#{text}\n</#{tag}>"
     @page[-1].push text
     text
