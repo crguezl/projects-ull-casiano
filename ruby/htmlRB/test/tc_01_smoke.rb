@@ -5,9 +5,9 @@ class TestHTML < Test::Unit::TestCase
   def test_simplepage
     q= HTML.new {  
       html {
-        head(:dir => "chazam", :lang => "spanish") { title "My wonderful home page" }
+        head { title "My wonderful home page" }
         body do
-          h1 "Welcome to my home page!", :class => "chuchu", :lang => "spanish"
+          h1 "Welcome to my home page!"
           b "My hobbies:"
           ul do
             li "Juggling"
@@ -19,38 +19,36 @@ class TestHTML < Test::Unit::TestCase
       }
     }
 
-    puts q.inspect
-
-    expected = <<'EXPECTEDHTMLPAGE'
+    expected =<<'EXPECTED'
 <html>
-<head dir = "chazam" lang = "spanish">
+<head>
 <title>
 My wonderful home page
 </title>
-</head> <body>
-<h1 class = "chuchu" lang = "spanish">
+</head><body>
+<h1>
 Welcome to my home page!
-</h1> <b>
+</h1><b>
 My hobbies:
-</b> <ul>
+</b><ul>
 <li>
 Juggling
-</li> <li>
+</li><li>
 Knitting
-</li> <li>
+</li><li>
 <i>
 Sleeping
 </i>
-</li> <li>
+</li><li>
 Metaprogramming
 </li>
-</ul> 
+</ul>
 </body>
 </html>
-EXPECTEDHTMLPAGE
+EXPECTED
     qtrim = q.to_s.gsub(/\s+/,'')
     etrim = expected.gsub(/\s+/,'')
 
-    assert_equal aqtrim, aetrim
+    assert_equal qtrim, etrim
   end
 end
