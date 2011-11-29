@@ -19,6 +19,8 @@ class TestHTML < Test::Unit::TestCase
       }
     }
 
+    puts q.inspect
+
     expected = <<'EXPECTEDHTMLPAGE'
 <html>
 <head dir = "chazam" lang = "spanish">
@@ -42,10 +44,13 @@ Sleeping
 </li> <li>
 Metaprogramming
 </li>
-</ul>
+</ul> 
 </body>
 </html>
 EXPECTEDHTMLPAGE
-    assert_equal q.to_s.gsub(/\s+/,''), expected.gsub(/\s+/,'')
+    qtrim = q.to_s.gsub(/\s+/,'')
+    etrim = expected.gsub(/\s+/,'')
+
+    assert_equal aqtrim, aetrim
   end
 end

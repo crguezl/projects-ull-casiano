@@ -1,0 +1,10 @@
+$:.unshift 'lib/'
+
+task :test => FileList['test/tc*.rb'] do |t|
+  puts "Running tests"
+  t.prerequisites.each do |r|
+    #puts r
+    require r
+    #sh "ruby -Ilib #{r}"
+  end
+end
