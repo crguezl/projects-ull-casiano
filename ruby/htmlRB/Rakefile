@@ -12,7 +12,8 @@ end
 # rake test TEST=just_one_file.rb     # run just one test file.
 # rake test TESTOPTS="-v"             # run in verbose mode
 Rake::TestTask.new do |t|
-  t.libs << "test"
+  # t.libs: List of directories to be added to $LOAD_PATH. (default is ‘lib’)
+  t.libs << "test" 
   t.test_files = FileList['test/tc*.rb'] 
-  t.verbose = true
+  t.verbose = true # verbose test output. (default is false)
 end
