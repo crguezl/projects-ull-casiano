@@ -1,9 +1,18 @@
 $:.unshift 'lib/'
+require 'rake/testtask'
 
-task :test => FileList['test/tc*.rb'] do |t|
+task :t => FileList['test/tc*.rb'] do |t|
   puts "Running tests"
   t.prerequisites.each do |r|
     puts "Tests in #{r}"
     require r
   end
+end
+
+# rake test TEST=just_one_file.rb     # run just one test file.
+# rake test TESTOPTS="-v"             # run in verbose mode
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList['test/tc*.rb'] 
+  t.verbose = true
 end
