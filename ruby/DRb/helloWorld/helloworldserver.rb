@@ -6,5 +6,6 @@ class HelloWorldServer
   end
 end
 
-DRb.start_service("druby://127.0.0.1:61676", HelloWorldServer.new)
+address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
+DRb.start_service(address, HelloWorldServer.new)
 DRb.thread.join
