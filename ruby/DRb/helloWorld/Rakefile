@@ -1,0 +1,13 @@
+task :default => [ :startserver, :clientserver ]
+
+task :startserver do
+ sh %{ruby helloworldserver.rb &}
+end
+
+task :startclient do
+ sh "ruby helloworldclient.rb"
+end
+
+task :stop do
+  sh %{ps -fA | grep 'ruby helloworldserver.rb'}
+end

@@ -5,7 +5,7 @@ require 'drb'
 DRb.start_service
 
 #address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
-address = "druby://127.0.0.1:61676"
-server = DRbObject.new_with_uri(address)
+address = "druby://localhost:61676"
+hwserver = DRbObject.new_with_uri(address)
 
-puts server.say_hello
+puts hwserver.say_hello

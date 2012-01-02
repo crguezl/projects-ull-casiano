@@ -6,6 +6,7 @@ class HelloWorldServer
   end
 end
 
+puts $$
 address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
 DRb.start_service(address, HelloWorldServer.new)
 DRb.thread.join
