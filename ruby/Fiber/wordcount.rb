@@ -11,7 +11,7 @@ end
 def counter_sep
   c = 0
   Fiber.new do
-    while true do
+    loop do
       c += 1
       if (c % 10) == 0 
         Fiber.yield "\n"
