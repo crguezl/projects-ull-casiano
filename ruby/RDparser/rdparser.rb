@@ -1,3 +1,21 @@
+=begin
+
+This is a great piece of code. One nit is that the token method should do:
+
+def token(pattern, &block)
+@lex_tokens << LexToken.new(Regexp.new('\\A(?:' + pattern.source + ')', pattern.options), block)
+end
+
+The (?: ) grouping is needed to make the \A apply to the whole pattern if it contains alternatives and the ?: prevents setting a \ variable.
+
+Also the pattern.options is needed for cases like
+
+token (/foo/i) ...
+
+to not lose the case-insensitive option.
+
+=end
+
 class RDParser
    attr_accessor :pos
    attr_reader :rules
@@ -53,9 +71,13 @@ class RDParser
 
    LexToken = Struct.new(:pattern, :block)
 
-   def token(pattern, &block)
-     @lex_tokens << LexToken.new(Regexp.new('\\A' + pattern.source), block)
-   end
+   #def token(pattern, &block)
+   #  @lex_tokens << LexToken.new(Regexp.new('\\A' + pattern.source), block)
+   #end
+
+    def token(pattern, &block)
+      @lex_tokens << LexToken.new(Regexp.new('\\A(?:' + pattern.source + ')', pattern.options), block)
+    end
 
    def start(name, &block)
      rule(name, &block)
