@@ -7,3 +7,4 @@ threads = []
 end
 puts "threads.length = #{threads.length}"
 sleep 1
+puts "threads.length = #{threads.length}"
