@@ -5,6 +5,11 @@ task :startserver do
  sh %{xterm -e 'ruby server.rb' &}
 end
 
+desc 'Starts server1'
+task :startserver1 do
+ sh %{xterm -e 'ruby server1.rb' &}
+end
+
 desc 'Starts client. Produces error'
 task :startclient do
  sh "ruby client.rb"
@@ -13,6 +18,11 @@ end
 desc 'Starts client1: includes class "user.rb"'
 task :startclient1 do
  sh "ruby client1.rb"
+end
+
+desc 'Starts client2: includes class "user.rb"'
+task :startclient2 do
+ sh "ruby client2.rb"
 end
 
 desc "Kill the server"
