@@ -10,13 +10,16 @@ task :startclient do
  sh "ruby helloworldclient.rb"
 end
 
+desc "Kill the server"
 task :clean do
   if File.readable? 'DRbhw.proc'
-    process = File.open('DRbhw.proc').gets.chomp!
-    sh "kill -9 #{process}"
+    process = File.open('DRbhw.proc').gets.chomp!.to_i
+    Process.kill(9, process) if Process.kill(0, process)
+    File.delete('Drbhw.proc')
   end
 end
 
+desc "Show the process matching 'ruby'"
 task :show do
-  sh %{ps -fA | grep 'ruby helloworldserver.rb'}
+  sh %{ps -fA | grep 'ruby' | grep -v $$}
 end
