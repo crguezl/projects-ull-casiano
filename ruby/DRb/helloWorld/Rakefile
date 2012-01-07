@@ -1,13 +1,22 @@
-task :default => [ :startserver, :clientserver ]
+task :default => [ :startclient ]
 
+desc 'Starts server'
 task :startserver do
- sh %{ruby helloworldserver.rb &}
+ sh %{xterm -e 'ruby helloworldserver.rb' &}
 end
 
+desc 'Starts client'
 task :startclient do
  sh "ruby helloworldclient.rb"
 end
 
-task :stop do
+task :clean do
+  if File.readable? 'DRbhw.proc'
+    process = File.open('DRbhw.proc').gets.chomp!
+    sh "kill -9 #{process}"
+  end
+end
+
+task :show do
   sh %{ps -fA | grep 'ruby helloworldserver.rb'}
 end

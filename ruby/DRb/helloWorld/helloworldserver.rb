@@ -6,7 +6,10 @@ class HelloWorldServer
   end
 end
 
-puts $$
+File.open('DRbhw.proc', 'w') do |f|
+  f.puts $$
+end
 address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
-DRb.start_service(address, HelloWorldServer.new)
+DRb.start_service(address, obj=HelloWorldServer.new)
+puts "Process #{$$}: Server running at #{address} serving #{obj}"
 DRb.thread.join
