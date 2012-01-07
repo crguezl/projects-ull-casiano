@@ -1,0 +1,30 @@
+task :default => [ :startclient ]
+
+desc 'Starts server'
+task :startserver do
+ sh %{xterm -e 'ruby server.rb' &}
+end
+
+desc 'Starts client. Produces error'
+task :startclient do
+ sh "ruby client.rb"
+end
+
+desc 'Starts client1: includes class "user.rb"'
+task :startclient1 do
+ sh "ruby client1.rb"
+end
+
+desc "Kill the server"
+task :clean do
+  if File.readable? 'pid.proc'
+    process = File.open('pid.proc').gets.chomp!.to_i
+    Process.kill(9, process) if Process.kill(0, process)
+    File.delete('pid.proc')
+  end
+end
+
+desc "Show the process matching 'ruby'"
+task :show do
+  sh %{ps -fA | grep 'ruby' | grep -v $$}
+end
