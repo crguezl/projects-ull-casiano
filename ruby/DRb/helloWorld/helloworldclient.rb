@@ -7,4 +7,5 @@ DRb.start_service
 address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
 server = DRbObject.new_with_uri(address)
 
+puts server.inspect
 puts server.say_hello

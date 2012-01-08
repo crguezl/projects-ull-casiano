@@ -11,4 +11,4 @@ class << server
   undef :instance_eval
 end
 
-server.instance_eval("`ls -l > CHUCHUMMMM`") 
+server.instance_eval("system 'ls -l > CHUCHUMMMM'") 
