@@ -2,6 +2,11 @@ task :default => [ :startclient ]
 
 desc 'Starts server'
 task :startserver do
+ sh %{ruby helloworldserver.rb} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts server in a new xterm'
+task :startserverX do
  sh %{xterm -e 'ruby helloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
 end
 
