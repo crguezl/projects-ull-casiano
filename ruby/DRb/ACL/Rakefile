@@ -38,7 +38,8 @@ task :clean do
   if File.readable? 'DRbhw.proc'
     process = File.open('DRbhw.proc').gets.chomp!.to_i
     Process.kill(9, process) if Process.kill(0, process)
-    File.delete('Drbhw.proc')
+    File.delete('DRbhw.proc')
+    File.delete('CHUCHUMMMM') if  File.readable? 'CHUCHUMMMM'
   end
   File.delete('CHUCHUM') if  File.readable? 'CHUCHUM'
 end
