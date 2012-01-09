@@ -16,12 +16,12 @@ task :startsafeserver do
 end
 
 desc 'Starts client'
-task :startclient => :startserver do
+task :startclient do
  sh "ruby helloworldclient.rb"
 end
 
 desc 'Starts BAD client with unsafe server'
-task :startbadclient => :startserver do
+task :startbadclient do
  sh <<"EOBCL"
  ruby helloworldbadclient.rb
  ls -l CHUCHUM
@@ -30,7 +30,7 @@ EOBCL
 end
 
 desc 'Starts BAD client with SAFE server'
-task :startbadclientwithsafe => :startsafeserver do
+task :startbadclientwithsafe do
  sh <<"EOBCL"
  ruby helloworldbadclient.rb
  ls -l CHUCHUM
