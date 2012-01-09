@@ -6,7 +6,10 @@ DRb.start_service
 
 puts "Bad client at #{$$}"
 #address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
-myip = `ifconfig en0 inet`.match(/(?:(?:\d{,3}\.)+\d{,3})/)[0]
+myip = ''
+File.open('MyIP', 'r') { |f| myip = f.gets.chomp! }
+puts "<#{myip}>"
+
 address = "druby://#{myip}:61676"
 server = DRbObject.new_with_uri(address)
 
