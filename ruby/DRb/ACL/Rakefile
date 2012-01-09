@@ -1,3 +1,4 @@
+# From the book "Distributed Programming with Ruby"
 task :default => [ :startclient ]
 
 desc 'Starts server'
