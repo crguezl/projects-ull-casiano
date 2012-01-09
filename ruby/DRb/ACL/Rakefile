@@ -50,7 +50,8 @@ task :clean do
   File.delete('CHUCHUM') if  File.readable? 'CHUCHUM'
 end
 
-desc "Show the process matching 'ruby'"
+desc "Show the proceses matching 'ruby' and the env vars matching 'ssh'"
 task :show do
   sh %{ps -fA | grep 'ruby' | grep -v $$}
+  sh %{env | grep -i ssh}
 end
