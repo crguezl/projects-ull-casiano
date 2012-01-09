@@ -6,8 +6,7 @@ DRb.start_service
 
 puts "Bad client at #{$$}"
 #address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
-myip = ''
-File.open('MyIP', 'r') { |f| myip = f.gets.chomp! }
+myip = File.open('MyIP', 'r').gets.chomp
 puts "<#{myip}>"
 
 address = "druby://#{myip}:61676"
@@ -18,3 +17,5 @@ class << server
 end
 
 server.instance_eval("system 'echo $$ > CHUCHUM;ps -f | grep CHUCHUM >> CHUCHUM'") 
+
+puts server.say_hello
