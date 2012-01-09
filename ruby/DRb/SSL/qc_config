@@ -1,4 +1,4 @@
-fullhostname = %x{hostname}.strip.split('.')
+full_hostname = %x{hostname}.strip.split('.')
 hostname = full_hostname[0]
 domainname = full_hostname[1..-1].join('.')
 
