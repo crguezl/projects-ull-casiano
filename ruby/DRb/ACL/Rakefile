@@ -1,0 +1,49 @@
+task :default => [ :startclient ]
+
+desc 'Starts server'
+task :startserver do
+ sh %{xterm -e 'ruby helloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts SAFE server'
+task :startsafeserver do
+ sh %{xterm -e 'ruby safehelloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts client'
+task :startclient => :startserver do
+ sh "ruby helloworldclient.rb"
+end
+
+desc 'Starts BAD client with unsafe server'
+task :startbadclient => :startserver do
+ sh <<"EOBCL"
+ ruby helloworldbadclient.rb
+ ls -l CHUCHUMMMM
+ cat -n CHUCHUMMMM
+EOBCL
+end
+
+desc 'Starts BAD client with SAFE server'
+task :startbadclientwithsafe => :startsafeserver do
+ sh <<"EOBCL"
+ ruby helloworldbadclient.rb
+ ls -l CHUCHUMMMM
+ cat -n CHUCHUMMMM
+EOBCL
+end
+
+desc "Kill the server"
+task :clean do
+  if File.readable? 'DRbhw.proc'
+    process = File.open('DRbhw.proc').gets.chomp!.to_i
+    Process.kill(9, process) if Process.kill(0, process)
+    File.delete('Drbhw.proc')
+    File.delete('CHUCHUMMMM') if  File.readable? 'CHUCHUMMMM'
+  end
+end
+
+desc "Show the process matching 'ruby'"
+task :show do
+  sh %{ps -fA | grep 'ruby' | grep -v $$}
+end

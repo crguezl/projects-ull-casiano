@@ -1,0 +1,4 @@
+9912
+  501  9907  9897   0 11:10AM ttys000    0:00.00 sh -c ruby helloworldbadclient.rb^J ls -l CHUCHUMMMM^J cat -n CHUCHUMMMM^J
+  501  9912  6922   0 11:10AM ttys002    0:00.00 sh -c echo $$ > CHUCHUM;ps -f | grep CHUCHUM >> CHUCHUM
+  501  9915  9912   0 11:10AM ttys002    0:00.00 grep CHUCHUM
