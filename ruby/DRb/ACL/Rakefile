@@ -38,8 +38,8 @@ end
 desc "Kill the server"
 task :clean do
   if File.readable? 'DRbhw.proc'
-    process = File.open('DRbhw.proc').gets.chomp!.to_i
     begin
+      process = File.open('DRbhw.proc').gets.chomp.to_i
       Process.kill(9, process) 
     rescue
     ensure

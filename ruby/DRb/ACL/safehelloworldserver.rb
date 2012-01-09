@@ -8,7 +8,7 @@ class HelloWorldServer
 end
 
 $SAFE = 1
-File.open('DRbhw.proc', 'w').puts $$
+File.open('DRbhw.proc', 'w') { |f| f.puts $$ }
 
 #address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
 
