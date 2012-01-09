@@ -12,7 +12,8 @@ File.open('DRbhw.proc', 'w') do |f|
 end
 #address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
 
-serverip = File.open('MyIP', 'r').gets.chomp
+#serverip = File.open('MyIP', 'r').gets.chomp
+serverip = "193.145.105.252"
 address = "druby://#{serverip}:61676"
 DRb.start_service(address, obj=HelloWorldServer.new)
 puts "Process #{$$}: Server running at #{address} serving #{obj}"
