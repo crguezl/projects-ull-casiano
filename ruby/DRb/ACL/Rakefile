@@ -1,7 +1,7 @@
 # From the book "Distributed Programming with Ruby"
 task :default => [ :startclient ]
 
-desc 'Starts server'
+desc 'Starts server. Run this goal on the remote/server machine'
 task :startserver do
  sh %{ruby helloworldserver.rb} unless File.readable? 'DRbhw.proc'
 end
@@ -16,7 +16,7 @@ task :startsafeserver do
  sh %{xterm -e 'ruby safehelloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
 end
 
-desc 'Starts client'
+desc 'Starts client. Run this goal on the local/client machine'
 task :startclient do
  sh "ruby helloworldclient.rb"
 end
