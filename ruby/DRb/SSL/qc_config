@@ -5,12 +5,12 @@ domainname = full_hostname[1..-1].join('.')
 CA[:hostname]   = hostname
 CA[:domainname] = domainname
 CA[:CA_dir]     = File.join(Dir.pwd, "CA")
-CA[:password]   = "he110"
+CA[:password]   = "1234"
 
 CERTS << {
   :type     => 'server',
   :hostname => 'hello-server',
-  :password => 'w0r1d!'
+  :password => '4567'
 }
 
 CERTS << {
