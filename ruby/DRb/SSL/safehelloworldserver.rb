@@ -1,29 +1,33 @@
+#!/usr/bin/env ruby
+
 require 'drb'
 require 'drb/ssl'
-
-$SAFE=1
-
-class HelloWorldServer
-  def say_hello
-    'Hello world!'
-  end
-end
 
 File.open('DRbhw.proc', 'w') do |f|
   f.puts $$
 end
 
-private_key = OpenSSL::PKey::RSA.new(File.read("hello-server/hello-server_keypair.pem"))
-certificate = OpenSSL::X509::Certificate.new(File.read("hello-server/cert_hello-server.pem"))
+here = "drbssl://localhost:3456"
 
-config = { 
-  :SSLPrivateKey        => private_key, 
-  :SSLCertificate       => certificate,
-  :SSLVerifyMode        => OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT,
-  :SSLCACertificateFile => "CA/cacert.pem"
+class HelloWorld
+  include DRbUndumped
+  
+  def hello(name)
+    "Hello, #{name}."
+  end
+end
+
+config = {
+  :SSLVerifyMode => OpenSSL::SSL::VERIFY_PEER |
+                           OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT,
+  :SSLPrivateKey =>
+    OpenSSL::PKey::RSA.new(File.read("hello-server/hello-server_keypair.pem")),
+  :SSLCertificate =>
+    OpenSSL::X509::Certificate.new(File.read("hello-server/cert_hello-server.pem")),
+  :SSLCACertificateFile => "CA/cacert.pem",
 }
-#address = "druby://imac-de-casiano-rodriguez-leon.local:61676"
-address = "drbssl://localhost:61676"
-DRb.start_service(address, obj=HelloWorldServer.new, config)
-puts "Process #{$$}: Server running at #{address} serving #{obj}"
+
+DRb.start_service here, HelloWorld.new, config
+puts DRb.uri
 DRb.thread.join
+

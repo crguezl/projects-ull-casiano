@@ -1,20 +1,20 @@
-full_hostname = %x{hostname}.strip.split('.')
-hostname = full_hostname[0]
-domainname = full_hostname[1..-1].join('.')
+full_hostname = `hostname`
+domainname = full_hostname.split('.')[1..-1].join('.')
+hostname = full_hostname.split('.')[0]
 
-CA[:hostname]   = hostname
+CA[:hostname] = hostname
 CA[:domainname] = domainname
-CA[:CA_dir]     = File.join(Dir.pwd, "CA")
-CA[:password]   = "1234"
+CA[:CA_dir] = "CA"
+CA[:password] = '1234'
 
 CERTS << {
-  :type     => 'server',
+  :type => 'server',
   :hostname => 'hello-server',
-  :password => '4567'
+  :password => '5678',
 }
 
 CERTS << {
-  :type  => 'client',
-  :user  => 'hello-client',
-  :email => 'casiano.rodriguez.leon@gmail.com'
+  :type => 'client',
+  :user => 'hello-client',
+  :email => 'casiano.rodriguez.leon@example.com',
 }

@@ -32,6 +32,16 @@ task :startsimpleclient do
 EOBCL
 end
 
+desc 'Starts server with Authorization'
+task :startsafeserver => :certificates do
+ sh %{ruby safehelloworldserver.rb} 
+end
+
+desc 'Starts safe client'
+task :startsafeclient do
+ sh "ruby safehelloworldclient.rb"
+end
+
 desc "Kill the server"
 task :clean do
   if File.readable? 'DRbhw.proc'
