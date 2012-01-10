@@ -1,6 +1,7 @@
 # From the book "Distributed Programming with Ruby"
 task :default => [ :startclient ]
 
+desc 'Builds the SSL certificates'
 task :certificates => [ 'qc_config' ] do
   unless File.readable? 'hello-client'
     sh "rm -fR CA hello-client hello-server"
@@ -9,7 +10,7 @@ task :certificates => [ 'qc_config' ] do
   end
 end
 
-desc 'Starts server. Run this goal on the remote/server machine'
+desc 'Starts server'
 task :startserver => :certificates do
  sh %{ruby helloworldserver.rb} unless File.readable? 'DRbhw.proc'
 end
@@ -19,7 +20,7 @@ task :startserverX => :certificates do
  sh %{xterm -e 'ruby helloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
 end
 
-desc 'Starts client. Run this goal on the local/client machine'
+desc 'Starts client'
 task :startclient do
  sh "ruby helloworldclient.rb"
 end
