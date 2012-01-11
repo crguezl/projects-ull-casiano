@@ -1,0 +1,39 @@
+require 'drb'
+
+class CustomIdConv
+
+  def to_obj(ref)
+    ObjectSpace._id2ref(ref.gsub(/^HW:/,'').to_i)
+  end
+
+  def to_id(obj)
+    "HW:#{ obj.object_id }"
+  end
+
+end
+
+class Hello
+  include DRbUndumped
+
+  def to_s
+    "Hello World!"
+  end
+end
+
+class HelloWorldServer
+  def say_hello
+    h = Hello.new
+    puts "Id of the object #{h.object_id}"
+    h
+  end
+end
+
+File.open('DRbhw.proc', 'w') do |f|
+  f.puts $$
+end
+
+DRb.install_id_conv(CustomIdConv.new)
+
+DRb.start_service('druby://127.0.0.1:61676',HelloWorldServer.new)
+
+DRb.thread.join()

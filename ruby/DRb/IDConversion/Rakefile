@@ -10,6 +10,11 @@ task :startclient => :startserver do
  sh "ruby idconvclient.rb"
 end
 
+desc 'Starts server with customized ID Converter'
+task :startcustomserver do
+ sh %{xterm -e 'ruby customidserver.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
 desc "Kill the server"
 task :clean do
   if File.readable? 'DRbhw.proc'
