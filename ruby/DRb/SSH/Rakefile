@@ -1,33 +1,45 @@
-task :default => [ :startconsumer ]
+task :default => [ :starttunel ]
 
-desc 'Starts SizedQueue server'
+desc 'Starts tunnel with the server machine'
+task :starttunnel do
+ sh %{ssh -L61675:localhost:61676 -N pp2 &} 
+end
+
+desc 'Starts server'
 task :startserver do
- sh %{xterm -e 'ruby shared_queue_server.rb' &} unless File.readable? 'DRbhw.proc'
+ # assume there is a link 'DrbSSH' to the work dir
+ # assume ruby1.9.2
+ sh "ssh pp2 'ruby ~/DrbSSH/helloworldserver.rb' &"
 end
 
-desc 'Starts producer'
-task :startproducer do
- sh "ruby producer.rb"
-end
-
-desc 'Starts consumer'
-task :startconsumer do
- sh "ruby consumer.rb"
+desc 'Starts client'
+task :startclient do
+ sh "ruby helloworldclient.rb"
 end
 
 desc "Kills the server and the producer"
 task :clean do
-  if File.readable? 'DRbhw.proc'
-    pf = File.open('DRbhw.proc')
-    process = pf.gets.chomp!.to_i
-    Process.kill(9, process) if Process.kill(0, process)
-    process = pf.gets.chomp!.to_i
-    Process.kill(9, process) if Process.kill(0, process)
-    File.delete('Drbhw.proc')
-  end
+  puts %x{
+    pkill -s 9 -f 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
+  }
+  puts %x{
+    ssh pp2 'pkill -s 9 -f "ruby ./DrbSSH/helloworldserver.rb"' 
+  }
+  puts %x{
+    pkill -s 9 -f 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' 
+  }
 end
 
 desc "Show the process matching 'ruby'"
 task :show do
-  sh %{ps -fA | grep 'ruby' | grep -v $$}
+  puts %x{
+    pgrep -f -l 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
+  }
+  puts "Remote:"
+  puts %x{
+    ssh pp2 'pgrep -l -f "ruby ./DrbSSH/helloworldserver.rb"'
+  }
+  puts %x{
+    pgrep -f -l 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' | grep -v pgrep
+  }
 end
