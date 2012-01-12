@@ -1,0 +1,33 @@
+task :default => [ :startconsumer ]
+
+desc 'Starts SizedQueue server'
+task :startserver do
+ sh %{xterm -e 'ruby shared_queue_server.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts producer'
+task :startproducer do
+ sh "ruby producer.rb"
+end
+
+desc 'Starts consumer'
+task :startconsumer do
+ sh "ruby consumer.rb"
+end
+
+desc "Kills the server and the producer"
+task :clean do
+  if File.readable? 'DRbhw.proc'
+    pf = File.open('DRbhw.proc')
+    process = pf.gets.chomp!.to_i
+    Process.kill(9, process) if Process.kill(0, process)
+    process = pf.gets.chomp!.to_i
+    Process.kill(9, process) if Process.kill(0, process)
+    File.delete('Drbhw.proc')
+  end
+end
+
+desc "Show the process matching 'ruby'"
+task :show do
+  sh %{ps -fA | grep 'ruby' | grep -v $$}
+end
