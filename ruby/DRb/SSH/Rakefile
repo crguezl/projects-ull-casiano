@@ -2,7 +2,7 @@ task :default => [ :starttunel ]
 
 desc 'Starts tunnel with the server machine'
 task :starttunnel do
- sh %{ssh -L61675:localhost:61676 -N pp2 &} 
+ sh %{ssh -L61675:localhost:61675 -N pp2 &} 
 end
 
 desc 'Starts server'
@@ -37,7 +37,7 @@ end
 desc "Kills tunnel"
 task :cleantunnel do
   puts %x{
-    pkill -s 9 -f 'ssh -L61675:localhost:61676 -N pp2' 
+    pkill -s 9 -f 'ssh -L61675:localhost:61675 -N pp2' 
   }
 end
 
@@ -54,7 +54,7 @@ end
 desc "Show the process matching 'ruby'"
 task :show do
   print %x{
-    pgrep -f -l 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
+    pgrep -f -l 'ssh -L61675:localhost:61675 -N pp2' | grep -v pgrep
   }
   print %x{
     pgrep -f -l 'ssh pp2 ruby .*/DRbSSH/helloworldserver.rb' | grep -v pgrep
