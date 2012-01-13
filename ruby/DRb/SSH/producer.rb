@@ -9,4 +9,3 @@ queue = DRbObject.new_with_uri('druby://localhost:61675')
   sleep(rand)
   queue.push(n)
 end
-DRb.thread.join

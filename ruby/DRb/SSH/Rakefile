@@ -7,9 +7,9 @@ end
 
 desc 'Starts server'
 task :startserver do
- # assume there is a link 'DrbSSH' to the work dir
+ # assume there is a link 'DRbSSH' to the work dir
  # assume ruby1.9.2
- sh "ssh pp2 'ruby ~/DrbSSH/helloworldserver.rb' &"
+ sh "ssh pp2 'ruby ~/DRbSSH/helloworldserver.rb' &"
 end
 
 desc 'Starts client'
@@ -17,29 +17,44 @@ task :startclient do
  sh "ruby helloworldclient.rb"
 end
 
-desc "Kills the server and the producer"
-task :clean do
+desc 'Starts Shared Queue server'
+task :startqueue do
+ # assume there is a link 'DRbSSH' to the work dir
+ # assume ruby1.9.2
+ sh "ssh pp2 'ruby ~/DRbSSH/shared_queue_server.rb' &"
+end
+
+desc 'Starts producer'
+task :startproducer do
+ sh "ruby producer.rb &"
+end
+
+desc 'Starts consumer'
+task :startconsumer do
+ sh "ruby consumer.rb"
+end
+
+desc "Kills tunnel"
+task :cleantunnel do
   puts %x{
-    pkill -s 9 -f 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
+    pkill -s 9 -f 'ssh -L61675:localhost:61676 -N pp2' 
   }
-  #puts %x{
-  #  ssh pp2 'pkill -s 9 -f "ruby ./DrbSSH/helloworldserver.rb"' 
-  #}
-  puts %x{
-    pkill -s 9 -f 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' 
-  }
+end
+
+desc "Kills the server"
+task :cleanserver do
+  sh "ssh pp2 'kill -9 `cat DrbSSH/DRbhw.proc`'"
 end
 
 desc "Show the process matching 'ruby'"
 task :show do
-  puts %x{
+  print %x{
     pgrep -f -l 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
   }
-  #puts "Remote:"
-  #puts %x{
-  #  ssh pp2 pgrep -l -f 'ruby ./DrbSSH/helloworldserver.rb'
-  #}
-  puts %x{
-    pgrep -f -l 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' | grep -v pgrep
+  print %x{
+    pgrep -f -l 'ssh pp2 ruby .*/DRbSSH/helloworldserver.rb' | grep -v pgrep
+  }
+  print %x{
+    pgrep -f -l 'ssh pp2 ruby .*/DRbSSH/shared_queue_server.rb' | grep -v pgrep
   }
 end
