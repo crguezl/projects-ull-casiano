@@ -43,7 +43,12 @@ end
 
 desc "Kills the server"
 task :cleanserver do
-  sh "ssh pp2 'kill -9 `cat DrbSSH/DRbhw.proc`'"
+  sh "ssh pp2 'kill -9 `cat DRbSSH/DRbhw.proc`'"
+end
+
+desc "Kills producer"
+task :cleanproducer do
+  sh 'kill -9 `cat DRbSSH/DRbhw.proc`'
 end
 
 desc "Show the process matching 'ruby'"

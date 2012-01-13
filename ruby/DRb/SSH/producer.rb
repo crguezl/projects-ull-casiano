@@ -1,6 +1,6 @@
 require 'drb/drb'
 
-File.open('DRbhw.proc', 'a') { |f| f.puts $$ }
+File.open('DRbhw.proc', 'w') { |f| f.puts $$ }
 
 DRb.start_service
 queue = DRbObject.new_with_uri('druby://localhost:61675')
