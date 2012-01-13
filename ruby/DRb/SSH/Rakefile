@@ -22,9 +22,9 @@ task :clean do
   puts %x{
     pkill -s 9 -f 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
   }
-  puts %x{
-    ssh pp2 'pkill -s 9 -f "ruby ./DrbSSH/helloworldserver.rb"' 
-  }
+  #puts %x{
+  #  ssh pp2 'pkill -s 9 -f "ruby ./DrbSSH/helloworldserver.rb"' 
+  #}
   puts %x{
     pkill -s 9 -f 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' 
   }
@@ -35,10 +35,10 @@ task :show do
   puts %x{
     pgrep -f -l 'ssh -L61675:localhost:61676 -N pp2' | grep -v pgrep
   }
-  puts "Remote:"
-  puts %x{
-    ssh pp2 'pgrep -l -f "ruby ./DrbSSH/helloworldserver.rb"'
-  }
+  #puts "Remote:"
+  #puts %x{
+  #  ssh pp2 pgrep -l -f 'ruby ./DrbSSH/helloworldserver.rb'
+  #}
   puts %x{
     pgrep -f -l 'ssh pp2 ruby ./DrbSSH/helloworldserver.rb' | grep -v pgrep
   }
