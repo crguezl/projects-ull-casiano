@@ -1,15 +1,17 @@
+server = ENV['DRBSERVER']
+server ||= 'pp2'
 task :default => [ :starttunel ]
 
 desc 'Starts tunnel with the server machine'
 task :starttunnel do
- sh %{ssh -L61675:localhost:61675 -N pp2 &} 
+ sh %{ssh -L61675:localhost:61675 -N #{server} &} 
 end
 
 desc 'Starts server'
 task :startserver do
  # assume there is a link 'DRbSSH' to the work dir
  # assume ruby1.9.2
- sh "ssh pp2 'ruby ~/DRbSSH/helloworldserver.rb' &"
+ sh "ssh #{server} 'ruby ~/DRbSSH/helloworldserver.rb' &"
 end
 
 desc 'Starts client'
@@ -21,7 +23,7 @@ desc 'Starts Shared Queue server'
 task :startqueue do
  # assume there is a link 'DRbSSH' to the work dir
  # assume ruby1.9.2
- sh "ssh pp2 'ruby ~/DRbSSH/shared_queue_server.rb' &"
+ sh "ssh #{server} 'ruby ~/DRbSSH/shared_queue_server.rb' &"
 end
 
 desc 'Starts producer'
@@ -37,13 +39,13 @@ end
 desc "Kills tunnel"
 task :cleantunnel do
   puts %x{
-    pkill -s 9 -f 'ssh -L61675:localhost:61675 -N pp2' 
+    pkill -s 9 -f "ssh -L61675:localhost:61675 -N #{server}" 
   }
 end
 
 desc "Kills the server"
 task :cleanserver do
-  sh "ssh pp2 'kill -9 `cat DRbSSH/DRbhw.proc`'"
+  sh "ssh #{server} 'kill -9 `cat DRbSSH/DRbhw.proc`'"
 end
 
 desc "Kills producer"
@@ -54,12 +56,12 @@ end
 desc "Show the process matching 'ruby'"
 task :show do
   print %x{
-    pgrep -f -l 'ssh -L61675:localhost:61675 -N pp2' | grep -v pgrep
+    pgrep -f -l "ssh -L61675:localhost:61675 -N #{server}" | grep -v pgrep
   }
   print %x{
-    pgrep -f -l 'ssh pp2 ruby .*/DRbSSH/helloworldserver.rb' | grep -v pgrep
+    pgrep -f -l "ssh #{server} ruby .*/DRbSSH/helloworldserver.rb" | grep -v pgrep
   }
   print %x{
-    pgrep -f -l 'ssh pp2 ruby .*/DRbSSH/shared_queue_server.rb' | grep -v pgrep
+    pgrep -f -l "ssh #{server} ruby .*/DRbSSH/shared_queue_server.rb" | grep -v pgrep
   }
 end
