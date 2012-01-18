@@ -14,10 +14,15 @@ class SimpleLogger
   end
 
   def log(s)
-    s = "#{Time.now}: s"
+    s = "#{Time.now}: #{s}"
     synchronize do
       @stream.puts s
     end
   end
 
 end
+
+logger = simpleLogger.new
+dict['logger'] = logger
+dict['logger info'] = "SimpleLogger is here."
+sleep
