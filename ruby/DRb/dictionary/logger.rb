@@ -3,6 +3,7 @@ require "monitor"
 
 DRb.start_service
 
+File.open("logger.proc", 'w') { |f| f.puts $$; $stderr.puts $$ }
 dict = DRbObject.new_with_uri("druby://localhost:23456")
 
 class SimpleLogger
@@ -22,7 +23,7 @@ class SimpleLogger
 
 end
 
-logger = simpleLogger.new
+logger = SimpleLogger.new
 dict['logger'] = logger
 dict['logger info'] = "SimpleLogger is here."
 sleep
