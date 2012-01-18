@@ -1,4 +1,6 @@
 #!/usr/bin/ruby -w
+# http://eric_rollins.home.mindspring.com/ParallelRuby.html
+
 # parallel.rb
 # Simple example of parallel processing using distributed ruby (DRb)
 # Eric Rollins 2006
