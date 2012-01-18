@@ -13,13 +13,6 @@ task :starttunnel do
  sh %{ssh -L23456:localhost:23456 -N #{sshserver} &} 
 end
 
-desc 'Starts server'
-task :startserver do
- # assume there is a link 'DRbSSH' to the work dir
- # assume ruby1.9.2
- sh "ssh #{sshserver} 'ruby ~/#{serverdir}/helloworldserver.rb' &"
-end
-
 desc 'Starts client'
 task :startclient do
  sh "ruby #{client}"
