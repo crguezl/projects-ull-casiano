@@ -1,3 +1,9 @@
 *~
 *.[oa]
 .*.swp
+promptforgit.sh
+ruby/htmlRB/README.rdoc
+ruby/htmlRB/doc/
+*.proc
+hello-client
+hello-server

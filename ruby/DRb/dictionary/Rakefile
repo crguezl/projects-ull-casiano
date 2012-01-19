@@ -1,0 +1,61 @@
+sshserver = ENV['DRBSERVER']
+sshserver ||= 'pp2'
+dictserver = 'dict.rb'
+serverdir = 'src/projects-ull-casiano/ruby/DRb/dictionary'
+logger = 'logger.rb'
+
+task :default => [ :starttunel ]
+
+client = "app.rb"
+
+desc 'Starts tunnel with the server machine'
+task :starttunnel do
+ sh %{ssh -L23456:localhost:23456 -N #{sshserver} &} 
+end
+
+desc 'Starts client'
+task :startclient do
+ sh "ruby #{client}"
+end
+
+desc "Starts #{dictserver}"
+task :startdict do
+ sh "ssh #{sshserver} 'ruby ~/#{serverdir}/#{dictserver}' &"
+end
+
+desc 'Starts logger'
+task :startlogger do
+ sh "ruby #{logger} &"
+end
+
+desc 'Starts app'
+task :startapp do
+ sh "ruby app.rb"
+end
+
+desc "Kills tunnel"
+task :cleantunnel do
+  puts %x{
+    pkill -s 9 -f "ssh -L23456:localhost:23456 -N #{sshserver}" 
+  }
+end
+
+desc "Kills the server"
+task :cleanserver do
+  sh "ssh #{sshserver} 'kill -9 `cat #{serverdir}/DRbhw.proc`'"
+end
+
+desc "Kills logger"
+task :cleanlogger do
+  sh 'kill -9 `cat #{serverdir}/logger.proc`'
+end
+
+desc "Show the process matching 'ruby'"
+task :show do
+  print %x{
+    pgrep -f -l "ssh -L23456:localhost:23456 -N #{sshserver}" | grep -v pgrep
+  }
+  print %x{
+    pgrep -f -l "ssh #{sshserver} ruby" | grep -v pgrep
+  }
+end

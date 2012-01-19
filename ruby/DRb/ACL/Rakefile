@@ -1,0 +1,57 @@
+# From the book "Distributed Programming with Ruby"
+task :default => [ :startclient ]
+
+desc 'Starts server. Run this goal on the remote/server machine'
+task :startserver do
+ sh %{ruby helloworldserver.rb} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts server in a new XTERM'
+task :startserverX do
+ sh %{xterm -e 'ruby helloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts SAFE server'
+task :startsafeserver do
+ sh %{xterm -e 'ruby safehelloworldserver.rb' &} unless File.readable? 'DRbhw.proc'
+end
+
+desc 'Starts client. Run this goal on the local/client machine'
+task :startclient do
+ sh "ruby helloworldclient.rb"
+end
+
+desc 'Starts BAD client with unsafe server'
+task :startbadclient do
+ sh <<"EOBCL"
+ ruby helloworldbadclient.rb
+EOBCL
+end
+
+desc 'Starts BAD client with SAFE server'
+task :startbadclientwithsafe do
+ sh <<"EOBCL"
+ ruby helloworldbadclient.rb
+EOBCL
+end
+
+desc "Kill the server"
+task :clean do
+  if File.readable? 'DRbhw.proc'
+    begin
+      process = File.open('DRbhw.proc').gets.chomp.to_i
+      Process.kill(9, process) 
+    rescue
+    ensure
+      File.delete('DRbhw.proc')
+      File.delete('CHUCHUMMMM') if  File.readable? 'CHUCHUMMMM'
+    end
+  end
+  File.delete('CHUCHUM') if  File.readable? 'CHUCHUM'
+end
+
+desc "Show the proceses matching 'ruby' and the env vars matching 'ssh'"
+task :show do
+  sh %{ps -fA | grep 'ruby' | grep -v $$}
+  sh %{env | grep -i ssh}
+end

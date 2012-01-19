@@ -1,0 +1,18 @@
+task :default => :hello_world_client
+
+task :ringserver do
+  sh "xterm -e 'ruby ringserver.rb' &"
+end
+
+task :hello_world_service => :ringserver do
+  sh "xterm -e 'ruby hello_world_service.rb' &"
+end
+
+task :hello_world_client => :hello_world_service do
+  sh "ruby hello_world_client.rb"
+end
+
+task :showruby do
+  sh "ps -fA | grep -i ruby"
+end
+
