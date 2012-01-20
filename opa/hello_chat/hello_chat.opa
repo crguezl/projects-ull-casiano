@@ -33,7 +33,8 @@ function user_update(message x) {
   line = <div class="row line">
             <div class="span1 columns userpic" />
             <div class="span2 columns user">{x.author}:</div>
-            <div class="span13 columns message">{x.text}
+            <div class="span13 columns message">
+              {x.text}
             </div>
          </div>
   #conversation =+ line
@@ -60,7 +61,7 @@ function broadcast(author) {
  * @return The user interface, ready to be sent by the server to the client on connection.
  */
 function start() {
-  author = Random.string(8)
+  author = "Casiano" // Random.string(8)
   <div class="topbar">
     <div class="fill">
       <div class="container">
