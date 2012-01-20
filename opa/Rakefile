@@ -1,6 +1,0 @@
-program = 'hello_chat.opa'
-
-task :default => :compile
-task :compile => program do
- sh %Q{opa --parser js-like #{program}}
-end
