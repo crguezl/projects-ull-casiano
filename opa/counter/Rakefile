@@ -1,0 +1,16 @@
+program = 'counter'
+
+desc "Compile #{program}.opa"
+task :default => :compile
+task :compile => program+".opa" do
+ sh %Q{opa --parser js-like #{program}.opa}
+end
+
+require 'rake/clean'
+CLEANLIST = [ "#{program}.exe", "_build", "*.log", "*.error" ]
+CLEAN.include(CLEANLIST)
+
+#task :clean do
+#  sh "rm -fR #{MAINNAME}/"
+#end
+
