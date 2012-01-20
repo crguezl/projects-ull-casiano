@@ -7,7 +7,7 @@ task :compile => program+".opa" do
 end
 
 require 'rake/clean'
-CLEANLIST = [ "#{program}.exe", "_build"]
+CLEANLIST = [ "#{program}.exe", "_build", "*.log", "*.error" ]
 CLEAN.include(CLEANLIST)
 
 #task :clean do
