@@ -1,0 +1,20 @@
+app = "helloworldapp"
+task :push do
+  sh <<"EOC"
+  cd src
+  dotcloud push #{app}
+EOC
+end
+
+desc "Show URL of #{app}"
+task :ls do
+ sh "dotcloud url #{app}"
+end
+
+#  sudo easy_install pip && sudo pip install dotcloud
+# 
+desc "Setup your API key (see  https://www.dotcloud.com/settings/)"
+task :api do
+  puts "See https://www.dotcloud.com/settings/"
+  sh "dotcloud setup"
+end

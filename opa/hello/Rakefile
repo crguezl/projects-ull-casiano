@@ -1,13 +1,21 @@
 program = 'hello'
+source  = "#{program}.opa"
+exe     = "#{program}.exe"
 
-desc "Compile #{program}.opa"
-task :default => :compile
-task :compile => program+".opa" do
- sh %Q{opa --parser js-like #{program}.opa}
+desc "Compile #{source}"
+task :default => "#{exe}"
+
+file "#{exe}" => program+".opa" do
+ sh %Q{opa --parser js-like #{source}}
+end
+
+desc "Starts the server"
+task :start => "#{exe}" do
+  sh "./#{exe}"
 end
 
 require 'rake/clean'
-CLEANLIST = [ "#{program}.exe", "_build", "*.log", "*.error" ]
+CLEANLIST = [ "#{exe}", "_build", "*.log", "*.error" ]
 CLEAN.include(CLEANLIST)
 
 #task :clean do
