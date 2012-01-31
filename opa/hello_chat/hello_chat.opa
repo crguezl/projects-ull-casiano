@@ -92,7 +92,7 @@ Server.start(
   Server.http,
   [ {resources: @static_resource_directory("resources")}
   , {register: ["resources/css.css"]}
-  , {title: "Chat", page:start }
+  , {title: "ChitChat", page:start }
   ]
 )
 

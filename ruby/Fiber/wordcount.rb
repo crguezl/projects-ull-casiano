@@ -23,7 +23,8 @@ def counter_sep
 end
 
 testfile = ARGV.shift || $0 
-words = scanner(testfile, /[a-zA-Z_]\w+/)
+regexp =  ARGV.shift  || /[a-zA-Z_]\w+/
+words = scanner(testfile, regexp)
 counts = Hash.new(0)
 while word = words.resume
   counts[word] += 1
