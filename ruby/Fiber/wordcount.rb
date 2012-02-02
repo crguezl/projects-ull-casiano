@@ -1,3 +1,6 @@
+#encoding: utf-8
+#Rodríguez
+C = 1
 def scanner(testfile, regexp) 
   Fiber.new {
     File.foreach(testfile) { |line|
@@ -13,7 +16,7 @@ def counter_sep
   Fiber.new do
     loop do
       c += 1
-      if (c % 10) == 0 
+      if (c % C) == 0 
         Fiber.yield "\n"
       else
         Fiber.yield " "
@@ -23,7 +26,7 @@ def counter_sep
 end
 
 testfile = ARGV.shift || $0 
-regexp =  Regexp.new(ARGV.shift  || '[a-z_]\w+', Regexp::IGNORECASE)
+regexp =  Regexp.new(ARGV.shift  || '\p{Alpha}\p{Alnum}*', Regexp::IGNORECASE)
 words = scanner(testfile, regexp)
 counts = Hash.new(0)
 while word = words.resume
