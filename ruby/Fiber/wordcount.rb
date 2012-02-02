@@ -1,6 +1,6 @@
 #encoding: utf-8
-#Rodríguez
-C = 1
+#Rodríguez León
+C = 10
 def scanner(testfile, regexp) 
   Fiber.new {
     File.foreach(testfile) { |line|
