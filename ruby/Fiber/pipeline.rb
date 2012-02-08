@@ -27,6 +27,7 @@ class PipelineElement
   def resume 
     @fiber.resume
   end
+
 end
 
 evens = PipelineElement.new(
@@ -36,20 +37,23 @@ evens = PipelineElement.new(
               Fiber.yield value
               value += 2
             end
-          end
+          end,
         )
            
-mult3 = PipelineElement.new(
-          lambda do |value|
-             Fiber.yield value if value % 3 == 0
-          end,
-          evens
-        )
+mult = []
+[3, 5].each_with_index  do |k, i| 
+  mult[i] = PipelineElement.new(
+    lambda do |value|
+       Fiber.yield value if value % k == 0
+    end,
+    evens
+  )
+end
            
 10.times do
-   puts mult3.resume
+   puts mult[1].resume
 end
 
 10.times do
-   puts (evens | mult3).resume
+   puts (evens | mult[0] | mult[1]).resume
 end
