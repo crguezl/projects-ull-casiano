@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+#encoding: utf-8
+
+count = Hash.new(0)
+#alternative: regexp = ARGV.shift || /[[:alnum:]]+/
+regexp = ARGV.shift || /\p{alpha}\p{Alnum}*/
+File.foreach(ARGV.shift || 'texto') do |line|
+  line.scan(regexp) { |w| count[w] += 1 }
+end
+
+count.each { |k, v| puts "%-10s %5i" %[k, v] }
