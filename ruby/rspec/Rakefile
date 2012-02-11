@@ -1,0 +1,20 @@
+
+desc "All requirements achieved"
+task :default do
+  sh "rspec -I. unittesting_28.rb"
+end
+
+desc "0-0 and 15-0 implemented"
+task :t25 do
+  sh "rspec -I. unittesting_25.rb"
+end
+
+desc "0-0 implemented"
+task :t22 do
+  sh "rspec -I. unittesting_22.rb"
+end
+
+desc "Nothing implemented. Requirements specified"
+task :t20 do
+  sh "rspec unittesting_20.rb"
+end
