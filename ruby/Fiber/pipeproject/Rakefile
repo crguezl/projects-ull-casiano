@@ -1,0 +1,16 @@
+p = "#{`pwd`.chomp}/lib/"
+puts p
+
+task :unit do
+  sh "ruby -I#{p} test/tc_unittest.rb" 
+end
+
+task :shoulda do
+  sh "ruby -I#{p} test/tc_shoulda.rb" 
+end
+
+task :rspec do
+  sh "rspec -I#{p} test/tc_rspec.rb" 
+end
+
+task :default => [ :unit, :rspec, :shoulda ]
