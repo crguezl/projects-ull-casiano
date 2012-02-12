@@ -1,16 +1,15 @@
-p = "#{`pwd`.chomp}/lib/"
-puts p
-
-task :unit do
-  sh "ruby -I#{p} test/tc_unittest.rb" 
+require 'rake/gempackagetask'
+spec = Gem::Specification.new do |s|
+  s.name = 'pipeelement'
+  s.version = '0.0.1'
+  s.platform = Gem::Platform::RUBY
+  s.files = Dir['**/**']
+  s.summary = 'Pipeline Elements using Fibers'
+  s.requirements = []
+  s.has_rdoc = false
+  s.authors = ['Casiano']
+  s.email = "casiano@pum.uk"
+  s.description = "Pipeline elements"
+  s.homepage = "http://puchurrum.com"
 end
-
-task :shoulda do
-  sh "ruby -I#{p} test/tc_shoulda.rb" 
-end
-
-task :rspec do
-  sh "rspec -I#{p} test/tc_rspec.rb" 
-end
-
-task :default => [ :unit, :rspec, :shoulda ]
+Rake::GemPackageTask.new(spec).define
