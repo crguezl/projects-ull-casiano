@@ -1,15 +1,23 @@
-require 'rake/gempackagetask'
+require 'rubygems'
+require 'rubygems/package_task'
+
 spec = Gem::Specification.new do |s|
-  s.name = 'pipeelement'
-  s.version = '0.0.1'
   s.platform = Gem::Platform::RUBY
-  s.files = Dir['**/**']
-  s.summary = 'Pipeline Elements using Fibers'
-  s.requirements = []
-  s.has_rdoc = false
+  s.summary = "Ruby based make-like utility."
+  s.name = 'pipelineelement'
+  s.version = "0.1.1"
+  s.requirements << 'none'
+  s.require_path = 'lib'
+  #s.autorequire = 'pipelineelement'
+  #s.files = PKG_FILES
   s.authors = ['Casiano']
-  s.email = "casiano@pum.uk"
-  s.description = "Pipeline elements"
+  s.files = Dir['**/**']
   s.homepage = "http://puchurrum.com"
+  s.email = "casiano@pum.uk"
+  s.description = "PipelineElement and dependencies are specified in standard Ruby syntax.  "
 end
-Rake::GemPackageTask.new(spec).define
+
+Gem::PackageTask.new(spec) do |pkg|
+  pkg.need_zip = true
+  pkg.need_tar = true
+end

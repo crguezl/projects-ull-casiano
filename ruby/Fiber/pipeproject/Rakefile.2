@@ -1,0 +1,15 @@
+require 'rake/gempackagetask'
+spec = Gem::Specification.new do |s|
+  s.name = 'pipeelement'
+  s.version = '0.0.1'
+  s.platform = Gem::Platform::RUBY
+  s.files = Dir['**/**']
+  s.summary = 'Pipeline Elements using Fibers'
+  s.requirements = []
+  s.has_rdoc = false
+  s.authors = ['Casiano']
+  s.email = "casiano@pum.uk"
+  s.description = "Pipeline elements"
+  s.homepage = "http://puchurrum.com"
+end
+Rake::GemPackageTask.new(spec).define
