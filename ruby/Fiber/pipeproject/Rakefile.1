@@ -1,14 +1,17 @@
 p = "#{`pwd`.chomp}/lib/"
 puts p
 
+desc "Unit tests"
 task :unit do
   sh "ruby -I#{p} test/tc_unittest.rb" 
 end
 
+desc "Shoulda tests"
 task :shoulda do
   sh "ruby -I#{p} test/tc_shoulda.rb" 
 end
 
+desc "Rspec tests"
 task :rspec do
   sh "rspec -I#{p} test/tc_rspec.rb" 
 end
