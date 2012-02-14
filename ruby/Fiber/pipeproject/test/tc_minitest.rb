@@ -3,6 +3,7 @@ require 'minitest/autorun'
 
 class TestPipelineElement < MiniTest::Unit::TestCase
 
+  # runs before each test
   def setup
     @evens = PipelineElement.new(
               lambda do
