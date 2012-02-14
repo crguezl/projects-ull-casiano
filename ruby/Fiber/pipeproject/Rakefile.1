@@ -6,6 +6,11 @@ task :unit do
   sh "ruby -I#{p} test/tc_unittest.rb" 
 end
 
+desc "Minitest tests"
+task :minitest do
+  sh "ruby -Ilib test/tc_minitest.rb" 
+end
+
 desc "Shoulda tests"
 task :shoulda do
   sh "ruby -I#{p} test/tc_shoulda.rb" 
@@ -16,4 +21,4 @@ task :rspec do
   sh "rspec -I#{p} test/tc_rspec.rb" 
 end
 
-task :default => [ :unit, :rspec, :shoulda ]
+task :default => [ :unit, :minitest, :rspec, :shoulda ]
