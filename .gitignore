@@ -1,6 +1,8 @@
 *~
 *.[oa]
 .*.swp
+.*.swo
+pkg/
 promptforgit.sh
 ruby/htmlRB/README.rdoc
 ruby/htmlRB/doc/
