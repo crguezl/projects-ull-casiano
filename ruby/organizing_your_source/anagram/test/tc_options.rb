@@ -25,5 +25,4 @@ class TestOptions < Test::Unit::TestCase
       assert_equal %w{word1 word2}, opts.words_to_find
     end
   end
-
 end
