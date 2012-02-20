@@ -5,7 +5,7 @@ dictionary = "/usr/share/dict/words"
 OptionParser.new do |opts|
   opts.banner = "Usage:   anagram [ options ] word ..."
   opts.on("-d", "--dict path", String, "Path to dictionary") do |dict|
-    dictionary = dict
+    @dictionary = dict
   end
   opts.on("-h", "--help", "Show this message") do
     puts opts
