@@ -1,5 +1,1 @@
-class TennisScorer
-  def score
-    "0-0"
-  end
-end
+unittesting_23.rb
