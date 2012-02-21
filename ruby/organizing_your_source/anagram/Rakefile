@@ -1,20 +1,9 @@
-require 'rubygems'
-#require 'rake/gempackagetask'
-require 'rubygems/package_task'
+require "rake/packagetask"
 
-spec = Gem::Specification.new do |s|
-  s.platform = Gem::Platform::RUBY
-  s.summary = "Makes anagrams of a word."
-  s.name = 'anagram'
-  s.version = '0.0.1' # PKG_VERSION
-  s.requirements << 'none'
-  s.require_path = 'lib'
-  s.autorequire = 'rake'
-  s.files = Dir['**/**'] # PKG_FILES
-  s.description = <<-EOF
-anagram is an executable that gives you the anagrams
-of a given word
-EOF
+Rake::PackageTask.new("anagram", "0.0.1") do |p|
+  p.need_tar = true
+  p.need_zip = true
+  p.package_files.include("lib/**/*.rb")
 end
 
 require 'rake/testtask'
