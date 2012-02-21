@@ -1,4 +1,3 @@
- 
 spec = Gem::Specification.new do |s|
   s.name = 'anagram'
   s.version = '0.0.1' # PKG_VERSION
@@ -17,8 +16,3 @@ EOF
   s.require_path = 'lib'
 end
 
-
-#Rake::GemPackageTask.new(spec) do |pkg|
-#  pkg.need_zip = true
-#  pkg.need_tar = true
-#end

@@ -1,4 +1,5 @@
 require 'rake/gempackagetask'
+#require 'rubygems/package_task'
 
 spec = Gem::Specification.load(Dir['*.gemspec'].first)
 gem = Rake::GemPackageTask.new(spec)
@@ -9,7 +10,7 @@ task :push => :gem do
   sh "gem push #{gem.package_dir}/#{gem.gem_file}"
 end
 
-require "rake/packagetask"
+require "rake/gempackagetask"
 
 Rake::PackageTask.new("anagram", "0.0.1") do |p|
   p.need_tar = true
@@ -28,3 +29,8 @@ Rake::TestTask.new do |t|
   t.warning = true
   t.verbose = true # verbose test output. (default is false)
 end
+
+require 'rake/clean'
+
+
+
