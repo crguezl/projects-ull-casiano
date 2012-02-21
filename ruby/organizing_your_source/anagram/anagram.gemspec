@@ -1,4 +1,3 @@
-#require "rake/gempackagetask"
  
 spec = Gem::Specification.new do |s|
   s.name = 'anagram'
@@ -12,11 +11,10 @@ EOF
   s.authors     = ["Casiano Rodriguez"]
   s.email       = 'casiano.rodriguez.leon@gmail.com'
   s.files = Dir['**/**'] # PKG_FILES
-  s.homepage    =
+  s.homepage    = 'http://nereida.deioc.ull.es/~anagram/'
   s.platform = Gem::Platform::RUBY
   s.requirements << 'none'
   s.require_path = 'lib'
-  s.autorequire = 'rake'
 end
 
 
