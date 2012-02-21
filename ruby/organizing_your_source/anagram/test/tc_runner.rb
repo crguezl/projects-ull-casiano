@@ -4,7 +4,7 @@ require_relative '../lib/anagram/runner'
 
 class TestRunner < Test::Unit::TestCase
   context "anagram executable" do
-    should "" do
+    should "produce anagrams" do
       out =  %x"ruby -Ilib bin/anagram teaching 2>& 1"
       assert_match(out, %r{cheating})
       assert_match(out, %r{teaching})
