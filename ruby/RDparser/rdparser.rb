@@ -1,5 +1,7 @@
 =begin
 
+http://snippets.dzone.com/posts/show/2190
+
 This is a great piece of code. One nit is that the token method should do:
 
 def token(pattern, &block)
