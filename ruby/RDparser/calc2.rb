@@ -23,7 +23,7 @@ parser = RDParser.new do
    end
 end
 
-expr = ARGV.shift || "2+3*4"
+expr = ARGV.shift || "2+3*(4+2)"
 puts parser.parse(expr)
 
 
