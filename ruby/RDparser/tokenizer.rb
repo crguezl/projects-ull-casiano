@@ -1,8 +1,5 @@
 class Lexer
-   attr_accessor :pos, 
-                 :start, :lex_tokens, :tokens,
-                 :max_pos, :expected
-   attr_reader :rules
+   attr_accessor :lex_tokens, :tokens
 
    def initialize(&block)
      @lex_tokens = []
