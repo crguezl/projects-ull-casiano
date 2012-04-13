@@ -3,7 +3,7 @@ require "rdparser"
 parser = RDParser.new do
    token(/\s+/)
    token(/\d+/) {|m| m.to_i }
-   token(/./) {|m| m }
+   token(/./)   {|m| m }
 
    start :expr do
      match(:expr, '+', :term) {|a, _, b| a + b }

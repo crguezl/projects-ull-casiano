@@ -19,7 +19,9 @@ to not lose the case-insensitive option.
 =end
 
 class RDParser
-   attr_accessor :pos
+   attr_accessor :pos, 
+                 :start, :lex_tokens, :tokens,
+                 :max_pos, :expected
    attr_reader :rules
 
    def initialize(&block)
@@ -32,7 +34,7 @@ class RDParser
    def parse(string)
      @tokens = []
      until string.empty?
-       raise "unable to lex '#{string}" unless @lex_tokens.any? do |tok|
+       there_is_a_match = @lex_tokens.any? do |tok|
          match = tok.pattern.match(string)
          if match
            @tokens << tok.block.call(match.to_s) if tok.block
@@ -42,6 +44,7 @@ class RDParser
            false
          end
        end
+       raise "unable to lex '#{string}" unless  there_is_a_match
      end
      @pos = 0
      @max_pos = 0
@@ -98,13 +101,14 @@ class RDParser
    end
 
    class Rule
+     attr_accessor :name, :parser, :matches, :lrmatches
      Match = Struct.new :pattern, :block
 
      def initialize(name, parser)
        @name = name
        @parser = parser
        @matches = []
-       @lrmatches = []
+       @lrmatches = [] # left recursive matches
      end
 
      def add_match(pattern, block)
@@ -167,3 +171,33 @@ class RDParser
    end
 end
 
+if __FILE__ == $0 then
+
+  parser = RDParser.new do
+     token(/\s+/)
+     token(/\d+/) {|m| m.to_i }
+     token(/./)   {|m| m }
+
+     start :expr do
+       match(:expr, '+', :term) {|a, _, b| a + b }
+       match(:expr, '-', :term) {|a, _, b| a - b }
+       match(:term)
+     end
+
+     rule :term do
+       match(:term, '*', :atom) {|a, _, b| a * b }
+       match(:term, '/', :atom) {|a, _, b| a / b }
+       match(:atom)
+     end
+
+     rule :atom do
+       match(Integer)
+       match('(', :expr, ')') {|_, a, _| a }
+     end
+  end
+
+  expr = ARGV.shift || "2+3*(4+2)"
+  puts expr
+  puts parser.parse(expr)
+
+end
