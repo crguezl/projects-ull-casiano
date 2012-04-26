@@ -46,6 +46,7 @@ class RDParser
        end
        raise "unable to lex '#{string}" unless  there_is_a_match
      end
+     puts "tokens = [#{@tokens.join(',')}]"
      @pos = 0
      @max_pos = 0
      @expected = []
